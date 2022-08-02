@@ -15,27 +15,35 @@
 
     <div class="row">
       <div class="col">
+        @if($errors->any())
+        <div class="alert alert-danger mt-2">
+          @foreach($errors->all() as $error)
+          <li>{{$error}}</li>
+          @endforeach
+        </div>
+        @endif
+
         <form action="/hotels" method="POST">
           @csrf
           <div class="form-group">
             <label class="text-white">Name</label>
-            <input type="text" name="name" id="name" class="form-control" />
+            <input type="text" name="name" id="name" class="form-control" value="{{old('name')}}" />
           </div>
           <div class="form-group">
             <label class="text-white">Address</label>
-            <input type="text" name="address" id="address" class="form-control" />
+            <input type="text" name="address" id="address" class="form-control" value="{{old('address')}}" />
           </div>
           <div class="form-group">
             <label class="text-white">City</label>
-            <input type="text" name="city" id="city" class="form-control" />
+            <input type="text" name="city" id="city" class="form-control" value="{{old('city')}}" />
           </div>
           <div class="form-group">
             <label class="text-white">NIT</label>
-            <input type="text" name="nit" id="nit" class="form-control" />
+            <input type="text" name="nit" id="nit" class="form-control" value="{{old('nit')}}" />
           </div>
           <div class="form-group">
             <label class="text-white">Rooms Number</label>
-            <input type="text" name="rooms_number" id="rooms_number" class="form-control" />
+            <input type="text" name="rooms_number" id="rooms_number" class="form-control" value="{{old('rooms_number')}}" />
           </div>
 
           <button type="submit" class="btn btn-primary mt-2">Save</button>

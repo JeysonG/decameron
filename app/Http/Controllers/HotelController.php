@@ -37,12 +37,21 @@ class HotelController extends Controller
    */
   public function store(Request $request)
   {
+    /* Validate hotel information */
+    $validData = $request->validate([
+      'name' => 'required|min:3|unique:hotels',
+      'address' => 'required|min:3',
+      'city' => 'required|min:3',
+      'nit' => 'required|min:3|unique:hotels',
+      'rooms_number' => 'required|integer'
+    ]);
+
     $hotel = new Hotel();
-    $hotel->name = $request->get('name');
-    $hotel->address = $request->get('address');
-    $hotel->city = $request->get('city');
-    $hotel->nit = $request->get('nit');
-    $hotel->rooms_number = $request->get('rooms_number');
+    $hotel->name = $validData['name'];
+    $hotel->address = $validData['address'];
+    $hotel->city = $validData['city'];
+    $hotel->nit = $validData['nit'];
+    $hotel->rooms_number = $validData['rooms_number'];
 
     $hotel->save();
     return redirect('/hotels');
@@ -82,12 +91,21 @@ class HotelController extends Controller
    */
   public function update(Request $request, $id)
   {
+    /* Validate hotel information */
+    $validData = $request->validate([
+      'name' => 'required|min:3|unique:hotels,name,' . $id,
+      'address' => 'required|min:3',
+      'city' => 'required|min:3',
+      'nit' => 'required|min:3|unique:hotels,nit,' . $id,
+      'rooms_number' => 'required|integer'
+    ]);
+
     $hotel = Hotel::find($id);
-    $hotel->name = $request->get('name');
-    $hotel->address = $request->get('address');
-    $hotel->city = $request->get('city');
-    $hotel->nit = $request->get('nit');
-    $hotel->rooms_number = $request->get('rooms_number');
+    $hotel->name = $validData['name'];
+    $hotel->address = $validData['address'];
+    $hotel->city = $validData['city'];
+    $hotel->nit = $validData['nit'];
+    $hotel->rooms_number = $validData['rooms_number'];
 
     $hotel->save();
     return redirect('/hotels');

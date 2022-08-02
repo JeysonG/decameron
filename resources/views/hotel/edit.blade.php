@@ -15,28 +15,36 @@
 
     <div class="row">
       <div class="col">
+        @if($errors->any())
+        <div class="alert alert-danger mt-2">
+          @foreach($errors->all() as $error)
+          <li>{{$error}}</li>
+          @endforeach
+        </div>
+        @endif
+
         <form action="/hotels/{{$hotel->id}}" method="POST">
           @csrf
           @method('put')
           <div class="form-group">
             <label class="text-white">Name</label>
-            <input type="text" name="name" id="name" class="form-control" value="{{$hotel->name}}" />
+            <input type="text" name="name" id="name" class="form-control" value="@if(old('name')){{old('name')}}@else{{$hotel->name}}@endif" />
           </div>
           <div class="form-group">
             <label class="text-white">Address</label>
-            <input type="text" name="address" id="address" class="form-control" value="{{$hotel->address}}" />
+            <input type="text" name="address" id="address" class="form-control" value="@if(old('address')){{old('address')}}@else{{$hotel->address}}@endif" />
           </div>
           <div class="form-group">
             <label class="text-white">City</label>
-            <input type="text" name="city" id="city" class="form-control" value="{{$hotel->city}}" />
+            <input type="text" name="city" id="city" class="form-control" value="@if(old('city')){{old('city')}}@else{{$hotel->city}}@endif" />
           </div>
           <div class="form-group">
             <label class="text-white">NIT</label>
-            <input type="text" name="nit" id="nit" class="form-control" value="{{$hotel->nit}}" />
+            <input type="text" name="nit" id="nit" class="form-control" value="@if(old('nit')){{old('nit')}}@else{{$hotel->nit}}@endif" />
           </div>
           <div class="form-group">
             <label class="text-white">Rooms Number</label>
-            <input type="text" name="rooms_number" id="rooms_number" class="form-control" value="{{$hotel->rooms_number}}" />
+            <input type="text" name="rooms_number" id="rooms_number" class="form-control" value="@if(old('rooms_number')){{old('rooms_number')}}@else{{$hotel->rooms_number}}@endif" />
           </div>
 
           <button type="submit" class="btn btn-primary mt-2">Update</button>
