@@ -5,13 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Hotel extends Model
+class RoomsDetail extends Model
 {
   use HasFactory;
 
-  /* Relation RoomsDetails model */
-  public function roomsDetails()
+  /* Relation to Hotel model */
+  public function hotel()
   {
-    return $this->hasMany(RoomsDetail::class);
+    return $this->belongsTo(Hotel::class);
   }
 }

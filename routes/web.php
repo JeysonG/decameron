@@ -21,4 +21,14 @@ Route::resource('/hotels', 'HotelController');
 /* Confirm delete */
 Route::get('/hotels/{id}/confirmDelete', 'HotelController@confirmDelete');
 
-Route::get('/details', 'DetailsController@index');
+/* Show create rooms details */
+Route::get('/hotels/{hotel}/rooms_details/create', 'RoomsDetailController@create');
+
+/* Create rooms details */
+Route::post('/hotels/{hotel}/rooms_details', 'RoomsDetailController@store');
+
+/* Show edit rooms details */
+Route::get('/rooms_details/edit/{id}', 'RoomsDetailController@edit');
+
+/* Edit rooms details */
+Route::resource('/rooms_details', 'RoomsDetailController');

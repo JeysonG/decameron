@@ -60,12 +60,14 @@ class HotelController extends Controller
   /**
    * Display the specified resource.
    *
-   * @param  int  $id
+   * @param  Hotel  $hotel
    * @return \Illuminate\Http\Response
    */
-  public function show($id)
+  public function show(Hotel $hotel)
   {
-    //
+    return view('hotel.show', [
+      'hotel' => $hotel
+    ]);
   }
 
   /**
@@ -76,7 +78,7 @@ class HotelController extends Controller
    */
   public function edit($id)
   {
-    $hotel = Hotel::find($id);
+    $hotel = Hotel::findOrFail($id);
     return view('hotel.edit', [
       'hotel' => $hotel
     ]);
@@ -100,7 +102,7 @@ class HotelController extends Controller
       'rooms_number' => 'required|integer'
     ]);
 
-    $hotel = Hotel::find($id);
+    $hotel = Hotel::findOrFail($id);
     $hotel->name = $validData['name'];
     $hotel->address = $validData['address'];
     $hotel->city = $validData['city'];
