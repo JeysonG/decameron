@@ -13,7 +13,7 @@
         <span class="text-gray-900 dark:text-white">{{$hotel->rooms_number}}</span>
 
         <a href="/hotels" class="btn btn-secondary float-end ml-2">Back</a>
-        <a type="button" class="btn btn-primary float-end" href="/hotels/{{$hotel->id}}/rooms_details/create">Add</a>
+        <a type="button" class="btn btn-primary float-end @if($countRoomsConfig==$hotel->rooms_number) disabled @endif" href="/hotels/{{$hotel->id}}/rooms_details/create">Add</a>
       </div>
     </div>
 

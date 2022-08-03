@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Hotel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class HotelController extends Controller
 {
@@ -65,8 +66,10 @@ class HotelController extends Controller
    */
   public function show(Hotel $hotel)
   {
+    $countRoomsConfig = DB::table('rooms_details')->where('hotel_id', $hotel->id)->sum('quantity');
     return view('hotel.show', [
-      'hotel' => $hotel
+      'hotel' => $hotel,
+      'countRoomsConfig' => $countRoomsConfig
     ]);
   }
 

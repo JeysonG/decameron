@@ -7,7 +7,6 @@ use App\Models\RoomsDetail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
-use Illuminate\Validation\Rule;
 
 class RoomsDetailController extends Controller
 {
@@ -28,7 +27,7 @@ class RoomsDetailController extends Controller
    */
   public function create(Hotel $hotel)
   {
-    $countRoomsConfig = DB::table('rooms_details')->sum('quantity');
+    $countRoomsConfig = DB::table('rooms_details')->where('hotel_id', $hotel->id)->sum('quantity');
     return view('roomsDetail.create', [
       'hotel' => $hotel,
       'countRoomsConfig' => $countRoomsConfig
@@ -50,13 +49,11 @@ class RoomsDetailController extends Controller
       ])->first();
 
     if ($exist_config) {
-      echo ($exist_config->id);
-
       return Redirect::back()->withErrors(['msg' => 'This configuration already exist.']);
     }
 
     /* Validate hotel information */
-    $countRoomsConfig = DB::table('rooms_details')->sum('quantity');
+    $countRoomsConfig = DB::table('rooms_details')->where('hotel_id', $hotel->id)->sum('quantity');
     $validateQuantity = $hotel->rooms_number - $countRoomsConfig;
 
     $validData = $request->validate([
@@ -94,9 +91,10 @@ class RoomsDetailController extends Controller
    */
   public function edit($id)
   {
-    $countRoomsConfig = DB::table('rooms_details')->sum('quantity');
     $rooms_detail = RoomsDetail::findOrFail($id);
     $hotel = Hotel::findOrFail($rooms_detail->hotel_id);
+    $countRoomsConfig = DB::table('rooms_details')->where('hotel_id', $hotel->id)->sum('quantity');
+
     return view('roomsDetail.edit', [
       'hotel' => $hotel,
       'rooms_detail' => $rooms_detail,
@@ -113,22 +111,21 @@ class RoomsDetailController extends Controller
    */
   public function update(Request $request, $id)
   {
+    $rooms_detail = RoomsDetail::findOrFail($id);
+    $hotel = Hotel::findOrFail($rooms_detail->hotel_id);
+
     /* Validate rooms details configuration */
     $exist_config =  DB::table('rooms_details as rm')
-      ->whereRaw('rm.id != ? and rm.type = ? and rm.category = ?', [
-        $id, $request->get('type'), $request->get('category')
+      ->whereRaw('rm.id <> ? and rm.hotel_id = ? and rm.type = ? and rm.category = ?', [
+        $id, $hotel->id, $request->get('type'), $request->get('category')
       ])->first();
 
     if ($exist_config) {
-      echo ($exist_config->id);
-
       return Redirect::back()->withErrors(['msg' => 'This configuration already exist.']);
     }
 
     /* Validate hotel information */
-    $countRoomsConfig = DB::table('rooms_details')->sum('quantity');
-    $rooms_detail = RoomsDetail::findOrFail($id);
-    $hotel = Hotel::findOrFail($rooms_detail->hotel_id);
+    $countRoomsConfig = DB::table('rooms_details')->where('hotel_id', $hotel->id)->sum('quantity');
 
     $validateQuantity = ($hotel->rooms_number - $countRoomsConfig) + $rooms_detail->quantity;
 
