@@ -74,6 +74,12 @@
     border-color: rgba(237, 242, 247, var(--border-opacity))
   }
 
+  border-gray-700 {
+    --border-opacity: 1;
+    border-color: #4a5568;
+    border-color: rgba(74, 85, 104, var(--border-opacity))
+  }
+
   .border-t {
     border-top-width: 1px
   }

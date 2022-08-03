@@ -4,28 +4,28 @@
 <div class="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 py-4 sm:pt-0">
   <div class="max-w-6xl mx-auto sm:px-6 lg:px-8">
     <div class="flex justify-center pt-8 sm:justify-start sm:pt-0">
-      <h1 class="text-white">Rooms configuration: {{$hotel->name}}</h1>
+      <h1 class="text-gray-900 dark:text-white">Rooms configuration: {{$hotel->name}}</h1>
     </div>
 
     <div class="row">
       <div class="col">
-        <label for="" class="text-white mt-2">Rooms Number:</label>
-        <span class="text-white">{{$hotel->rooms_number}}</span>
+        <label for="" class="text-gray-900 dark:text-white mt-2">Rooms Number:</label>
+        <span class="text-gray-900 dark:text-white">{{$hotel->rooms_number}}</span>
 
         <a href="/hotels" class="btn btn-secondary float-end ml-2">Back</a>
         <a type="button" class="btn btn-primary float-end" href="/hotels/{{$hotel->id}}/rooms_details/create">Add</a>
       </div>
     </div>
 
-    <hr class="text-white">
+    <hr class="text-gray-900 dark:text-white">
 
     <div class="row">
       <div class="col">
-        <h4 class="text-white">Rooms Details</h4>
+        <h4 class="text-gray-900 dark:text-white">Rooms Details</h4>
 
         <ul>
           @foreach($hotel->roomsDetails as $detail)
-          <li class="text-white mt-3 py-2">
+          <li class="text-gray-900 dark:text-white mt-3 py-2">
             {{$detail->type}} |
             {{$detail->category}} |
             {{$detail->quantity}}
